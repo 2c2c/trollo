@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import AppHeader from './AppHeader'
 import './App.css';
+import AppCard from './AppCard'
+import CardSpace from './CardSpace'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <AppHeader />
+      <AppCard text="hi" />
+      <AppCard text="hi" />
+      <AppCard text="hi" />
+      <CardSpace columns={['a']}/>
       </div>
     );
   }
