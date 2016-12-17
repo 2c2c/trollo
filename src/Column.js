@@ -1,5 +1,6 @@
 import React from 'react';
 import AppCard from './AppCard'
+import AppCardEdit from './AppCardEdit'
 import FlatButton from 'material-ui/FlatButton'
 
 export default class Column extends React.Component {

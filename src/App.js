@@ -4,6 +4,7 @@ import AppHeader from './AppHeader'
 import './App.css';
 import AppCard from './AppCard'
 import CardSpace from './CardSpace'
+import AppCardEdit from './AppCardEdit'
 let columns = [
   {
     name: 'column1',
@@ -23,6 +24,7 @@ class App extends Component {
       <div className="App">
         <AppHeader/>
         <CardSpace columns={columns}/>
+        <AppCardEdit />
       </div>
     );
   }
