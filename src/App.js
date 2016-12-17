@@ -4,7 +4,6 @@ import AppHeader from './AppHeader'
 import './App.css';
 import AppCard from './AppCard'
 import CardSpace from './CardSpace'
-import HelloWorld from './HelloWorld'
 let columns = [
   {
     name: 'column1',

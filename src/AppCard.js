@@ -4,9 +4,11 @@ import Paper from 'material-ui/Paper'
 const style = {
   height: 100,
   width: 200,
-  margin: 20,
+  margin: "0px 0px 0px 0px",
   textAlign: 'center',
-  display: 'inline-block',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
 };
 
 const AppCard = (props) => <div>
