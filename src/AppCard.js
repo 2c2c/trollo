@@ -11,7 +11,7 @@ const style = {
 
 const AppCard = (props) => <div>
   <Paper style={style} zDepth={1}>
-    {props.text}
+    {props.children}
   </Paper>
 </div>
 

@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\2c\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-tap-event-plugin
+  C:\Program Files\nodejs\node.exe C:\Users\2c\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add reflexbox
 
 PATH: 
-  C:\Users\2c\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\2c\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Users\2c\AppData\Local\Microsoft\WindowsApps;C:\Users\2c\AppData\Roaming\npm;C:\Users\2c\AppData\Local\atom\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\2c\AppData\Local\Microsoft\WindowsApps;C:\Users\2c\AppData\Roaming\npm;C:\Users\2c\AppData\Local\atom\bin;C:\Users\2c\AppData\Local\GitHubCLI\bin
 
 Yarn version: 
   0.16.1
@@ -25,7 +25,8 @@ npm manifest:
     "dependencies": {
       "material-ui": "^0.16.5",
       "react": "^15.4.1",
-      "react-dom": "^15.4.1"
+      "react-dom": "^15.4.1",
+      "react-tap-event-plugin": "^2.0.1"
     },
     "scripts": {
       "start": "react-scripts start",
@@ -2437,7 +2438,7 @@ Lockfile:
     dependencies:
       bser "^1.0.2"
   
-  fbjs@^0.8.1, fbjs@^0.8.4:
+  fbjs@^0.8.1, fbjs@^0.8.4, fbjs@^0.8.6:
     version "0.8.6"
     resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.6.tgz#7eb67d6986b2d5007a9b6e92e0e7cb6f75cad290"
     dependencies:
@@ -4966,6 +4967,12 @@ Lockfile:
     dependencies:
       babel-runtime "^6.5.0"
   
+  react-tap-event-plugin:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/react-tap-event-plugin/-/react-tap-event-plugin-2.0.1.tgz#316beb3bc6556e29ec869a7293e89c826a9074d2"
+    dependencies:
+      fbjs "^0.8.6"
+  
   read-pkg-up@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"
@@ -6178,4 +6185,4 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: ENOENT: no such file or directory, open 'C:\Users\2c\Desktop\trello\node_modules\@kadira\storybook\node_modules\postcss-loader\CHANGELOG.md'
+  Error: ENOENT: no such file or directory, open 'C:\Users\2c\Desktop\trollo\node_modules\@kadira\storybook\node_modules\postcss-loader\LICENSE'
