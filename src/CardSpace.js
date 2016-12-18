@@ -1,14 +1,34 @@
 import React from 'react';
 import Column from './Column';
-import View from 'react-flexbox';
+import AddColumn from './AddColumn'
 
-const CardSpace = (props) => <span style={{
-  display: 'flex',
-  alignItems: 'flex-start',
-}}>
-  {props
-    .columns
-    .map(c => <Column name={c.name} cards={c.cards}/>)}
-</span>
+class CardSpace extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      columns: []
+    }
+  }
+  addColumn(text) {
+    this.setState({
+      columns: [
+        ...this.state.columns,
+        text,
+      ]
+    })
+  }
+  render() {
+    return <span style={{
+      display: 'flex',
+      alignItems: 'flex-start',
+    }}>
+      {this
+        .state
+        .columns
+        .map(c => <Column name={c}/>)}
+      <AddColumn addColumn={this.addColumn.bind(this)}/>
+    </span>
+  }
+}
 
 export default CardSpace;

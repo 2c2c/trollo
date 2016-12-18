@@ -8,7 +8,7 @@ const style = {
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center'
+  justifyContent: 'center',
 };
 
 class AppCard extends React.Component {
@@ -16,7 +16,7 @@ class AppCard extends React.Component {
     super();
     this.state = {
       edit: true,
-      text: '',
+      text: ''
     }
   }
 
@@ -29,7 +29,7 @@ class AppCard extends React.Component {
     const input = <form
       style={{
       width: "100%",
-      height: "100%",
+      height: "100%"
     }}
       onSubmit={e => this.handleSubmit(e)}>
       <input
@@ -38,7 +38,6 @@ class AppCard extends React.Component {
         height: "100%",
         borderStyle: 'none',
       }}
-        type="text"
         onChange={e => this.setState({text: e.target.value})}/>
     </form>
 

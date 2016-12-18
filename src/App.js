@@ -24,7 +24,6 @@ class App extends Component {
       <div className="App">
         <AppHeader/>
         <CardSpace columns={columns}/>
-        <AppCardEdit />
       </div>
     );
   }
