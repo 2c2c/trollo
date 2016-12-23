@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Card from './AppCard'
+import Card from './Card'
 
 const styles = {
   height: 100,
@@ -11,4 +11,6 @@ const styles = {
   WebkitTransform: 'rotate(-7deg)'
 };
 
-const CardDragPreview = (props) => <Card style={style}>{props.children}</Card>
+const CardDragPreview = (props) => <Card style={styles}>{props.children}</Card>
+
+export default CardDragPreview;

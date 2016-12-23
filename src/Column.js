@@ -4,6 +4,7 @@ import AppCardEdit from './AppCardEdit'
 import FlatButton from 'material-ui/FlatButton'
 import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import CustomDragLayer from './CustomDragLayer'
 
 class Column extends React.Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class Column extends React.Component {
     let {cards} = this.state;
     const dragCard = cards[dragIndex];
 
-    console.log(cards)
     cards.splice(dragIndex, 1)
     cards.splice(hoverIndex, 0, dragCard)
     console.log(cards)
@@ -80,6 +80,7 @@ class Column extends React.Component {
             }
           ]
         })}>Add new card</FlatButton>
+        <CustomDragLayer />
       </div>
     )
   }

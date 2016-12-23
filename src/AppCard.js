@@ -4,6 +4,7 @@ import {DragSource, DropTarget} from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import {findDOMNode} from 'react-dom'
 import Card from './Card'
+import {getEmptyImage} from 'react-dnd-html5-backend'
 
 const style = {
   height: 100,
@@ -18,7 +19,7 @@ const style = {
 
 const cardSource = {
   beginDrag(props) {
-    return {id: props.id, index: props.index};
+    return {id: props.id, index: props.index, text: props.text};
   }
 };
 
@@ -71,14 +72,22 @@ class AppCard extends React.Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
+    connectDragPreview: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
+    text: PropTypes.string.isRequired,
     moveCard: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.connectDragPreview(getEmptyImage(), {
+      captureDraggingState: true
+    })
   }
 
   render() {
@@ -130,5 +139,6 @@ export default DropTarget(ItemTypes.CARD, cardTarget, (connect, monitor) => ({
   canDrop: monitor.canDrop()
 }))(DragSource(ItemTypes.CARD, cardSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
   isDragging: monitor.isDragging()
 }))(AppCard))
