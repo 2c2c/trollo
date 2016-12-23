@@ -7,7 +7,7 @@ import {findDOMNode} from 'react-dom'
 const style = {
   height: 100,
   width: 200,
-  margin: "0px 0px 0px 0px",
+  margin: "0px 0px 10px 0px",
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column',
@@ -80,9 +80,17 @@ class AppCard extends React.Component {
     super(props);
   }
 
-
   render() {
-    const {id, handleSubmit, handleChange, isDragging, connectDragSource, connectDropTarget} = this.props;
+    const {
+      id,
+      handleSubmit,
+      handleChange,
+      isDragging,
+      connectDragSource,
+      connectDropTarget,
+      isOver,
+      canDrop
+    } = this.props;
     const input = <form
       style={{
       width: "100%",
@@ -102,18 +110,28 @@ class AppCard extends React.Component {
       ? input
       : this.props.text
 
-    return connectDragSource(connectDropTarget(
+    const render_nodrag = <div>
+      <Paper style={style} zDepth={1}>
+        {rendered}
+      </Paper>
+    </div>
+
+    const render_dragover =
       <div>
-        <Paper style={style} zDepth={1}>
-          {rendered}
+        <Paper style={{...style, backgroundColor: '#C2C6C9'}} zDepth={1}>
         </Paper>
       </div>
+
+    return connectDragSource(connectDropTarget(
+      isOver && canDrop ? render_dragover : render_nodrag
     ));
   }
 }
 
-export default DropTarget(ItemTypes.CARD, cardTarget, connect => ({
-  connectDropTarget: connect.dropTarget()
+export default DropTarget(ItemTypes.CARD, cardTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
 }))(DragSource(ItemTypes.CARD, cardSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
