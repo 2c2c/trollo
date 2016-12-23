@@ -6,7 +6,7 @@ class AddColumn extends React.Component {
     super();
     this.state = {
       edit: false,
-      text: '',
+      text: ''
     }
   }
 
@@ -15,7 +15,7 @@ class AddColumn extends React.Component {
     this
       .props
       .addColumn(this.state.text);
-    this.setState({edit: false, text: '',})
+    this.setState({edit: false, text: ''})
   }
 
   render() {
@@ -24,7 +24,7 @@ class AddColumn extends React.Component {
         style={{
         width: "100%",
         height: "100%",
-        borderStyle: 'none',
+        borderStyle: 'none'
       }}
         onChange={e => this.setState({text: e.target.value})}/>
     </form>

@@ -2,13 +2,26 @@ import React from 'react';
 import AppCard from './AppCard'
 import AppCardEdit from './AppCardEdit'
 import FlatButton from 'material-ui/FlatButton'
+import {DragDropContext} from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
-export default class Column extends React.Component {
+class Column extends React.Component {
   constructor() {
     super();
     this.state = {
       cards: []
     }
+  }
+
+  moveCard(dragIndex, hoverIndex) {
+    const {cards} = this.state;
+    const dragCard = cards[dragIndex];
+
+    this.setState({
+      cards: cards
+        .splice(dragIndex, 1)
+        .splice(hoverIndex, 0, dragCard)
+    })
   }
   render() {
     return (
@@ -22,7 +35,8 @@ export default class Column extends React.Component {
         <div>{this
             .state
             .cards
-            .map(c => <AppCard>{c}</AppCard>)}</div>
+            .map((c, i) => <AppCard key={i} index={i} id={i} moveCard={this.moveCard}>{c}</AppCard>)}
+        </div>
         <FlatButton
           style={{
           margin: '0 10 0 10',
@@ -32,10 +46,12 @@ export default class Column extends React.Component {
           onClick={e => this.setState({
           cards: [
             ...this.state.cards,
-            'asdf',
+            'asdf'
           ]
         })}>Add new card</FlatButton>
       </div>
     )
   }
 }
+
+export default DragDropContext(HTML5Backend)(Column)
