@@ -3,6 +3,7 @@ import Paper from 'material-ui/Paper'
 import {DragSource, DropTarget} from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import {findDOMNode} from 'react-dom'
+import Card from './Card'
 
 const style = {
   height: 100,
@@ -110,21 +111,16 @@ class AppCard extends React.Component {
       ? input
       : this.props.text
 
-    const render_nodrag = <div>
-      <Paper style={style} zDepth={1}>
-        {rendered}
-      </Paper>
-    </div>
-
-    const render_dragover =
-      <div>
-        <Paper style={{...style, backgroundColor: '#C2C6C9'}} zDepth={1}>
-        </Paper>
-      </div>
-
-    return connectDragSource(connectDropTarget(
-      isOver && canDrop ? render_dragover : render_nodrag
-    ));
+    return connectDragSource(connectDropTarget(isOver && canDrop
+      ? <div><Card
+          style={{
+          ...style,
+          backgroundColor: '#C2C6C9'
+        }}/>
+        </div>
+      : <div>
+        <Card style={style}>{rendered}</Card>
+      </div>));
   }
 }
 
