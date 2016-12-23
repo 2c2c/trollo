@@ -6,23 +6,44 @@ import {DragDropContext} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 class Column extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.moveCard = this
+      .moveCard
+      .bind(this)
     this.state = {
       cards: []
     }
   }
 
   moveCard(dragIndex, hoverIndex) {
-    const {cards} = this.state;
+    let {cards} = this.state;
     const dragCard = cards[dragIndex];
 
-    this.setState({
-      cards: cards
-        .splice(dragIndex, 1)
-        .splice(hoverIndex, 0, dragCard)
-    })
+    console.log(cards)
+    cards.splice(dragIndex, 1)
+    cards.splice(hoverIndex, 0, dragCard)
+    console.log(cards)
+
+    this.setState({cards: cards})
   }
+
+  handleSubmit(e, id) {
+    e.preventDefault()
+    e.stopPropagation()
+    let {cards} = this.state
+    cards[id].edit = false
+    this.setState({cards: cards})
+  }
+
+  handleChange(e, id) {
+    e.preventDefault()
+    e.stopPropagation()
+    let {cards} = this.state
+    cards[id].text = e.target.value
+    this.setState({cards: cards})
+  }
+
   render() {
     return (
       <div
@@ -35,7 +56,15 @@ class Column extends React.Component {
         <div>{this
             .state
             .cards
-            .map((c, i) => <AppCard key={i} index={i} id={i} moveCard={this.moveCard}>{c}</AppCard>)}
+            .map((c, i) => <AppCard
+              edit={c.edit}
+              text={c.text}
+              key={i}
+              index={i}
+              id={i}
+              moveCard={this.moveCard}
+              handleSubmit={(e, id) => this.handleSubmit(e, id)}
+              handleChange={(e, id) => this.handleChange(e, id)}/>)}
         </div>
         <FlatButton
           style={{
@@ -45,8 +74,10 @@ class Column extends React.Component {
         }}
           onClick={e => this.setState({
           cards: [
-            ...this.state.cards,
-            'asdf'
+            ...this.state.cards, {
+              edit: true,
+              text: ""
+            }
           ]
         })}>Add new card</FlatButton>
       </div>

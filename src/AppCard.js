@@ -73,47 +73,38 @@ class AppCard extends React.Component {
     index: PropTypes.number.isRequired,
     isDragging: PropTypes.bool.isRequired,
     id: PropTypes.any.isRequired,
-    text: PropTypes.string.isRequired,
     moveCard: PropTypes.func.isRequired
   };
 
-  constructor() {
-    super();
-    this.state = {
-      edit: true,
-      text: ''
-    }
+  constructor(props) {
+    super(props);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.setState({edit: false})
-  }
 
   render() {
-    const {isDragging, connectDragSource, connectDropTarget} = this.props;
+    const {id, handleSubmit, handleChange, isDragging, connectDragSource, connectDropTarget} = this.props;
     const input = <form
       style={{
       width: "100%",
       height: "100%"
     }}
-      onSubmit={e => this.handleSubmit(e)}>
+      onSubmit={e => handleSubmit(e, id)}>
       <input
         style={{
         width: "100%",
         height: "100%",
         borderStyle: 'none'
       }}
-        onChange={e => this.setState({text: e.target.value})}/>
+        onChange={e => handleChange(e, id)}/>
     </form>
 
-    const rendered = this.state.edit
+    const rendered = this.props.edit
       ? input
-      : this.state.text
+      : this.props.text
 
     return connectDragSource(connectDropTarget(
       <div>
-        <Paper onClick={e => this.setState({edit: true})} style={style} zDepth={1}>
+        <Paper style={style} zDepth={1}>
           {rendered}
         </Paper>
       </div>
