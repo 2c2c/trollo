@@ -19,16 +19,22 @@ const style = {
 
 const cardSource = {
   beginDrag(props) {
-    return {id: props.id, index: props.index, text: props.text};
+    return {id: props.id, index: props.index, text: props.text, columnId: props.columnId};
   }
 };
 
 const cardTarget = {
-  hover(props, monitor, component) {
+  drop(props, monitor, component) {
     const dragIndex = monitor
       .getItem()
       .index;
+
+    const dragColumn = monitor
+      .getItem()
+      .columnId
+
     const hoverIndex = props.index;
+    const hoverColumn = props.columnId;
 
     //dont replace with themselves
     if (dragIndex === hoverIndex) {
@@ -59,8 +65,9 @@ const cardTarget = {
       return;
     }
 
-    props.moveCard(dragIndex, hoverIndex)
+    props.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)
 
+    // ?
     monitor
       .getItem()
       .index = hoverIndex;
@@ -85,13 +92,14 @@ class AppCard extends React.Component {
   }
 
   componentDidMount() {
-    this.props.connectDragPreview(getEmptyImage(), {
-      captureDraggingState: true
-    })
+    this
+      .props
+      .connectDragPreview(getEmptyImage(), {captureDraggingState: true})
   }
 
   render() {
     const {
+      columnId,
       id,
       handleSubmit,
       handleChange,
@@ -106,14 +114,14 @@ class AppCard extends React.Component {
       width: "100%",
       height: "100%"
     }}
-      onSubmit={e => handleSubmit(e, id)}>
+      onSubmit={e => handleSubmit(e, id, columnId)}>
       <input
         style={{
         width: "100%",
         height: "100%",
         borderStyle: 'none'
       }}
-        onChange={e => handleChange(e, id)}/>
+        onChange={e => handleChange(e, id, columnId)}/>
     </form>
 
     const rendered = this.props.edit
