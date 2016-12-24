@@ -23,7 +23,7 @@ class Column extends React.Component {
 
     cards.splice(dragIndex, 1)
     cards.splice(hoverIndex, 0, dragCard)
-    console.log(cards)
+    console.log(cards.map(c => c.text))
 
     this.setState({cards: cards})
   }
@@ -52,11 +52,12 @@ class Column extends React.Component {
         padding: "20px 10px 0px 10px",
         margin: "0px 5px 0px 5px"
       }}>
-        <h3>{this.props.name}</h3>
+        <h3 style={{textAlign: 'left'}}>{this.props.name}</h3>
         <div>{this
             .state
             .cards
             .map((c, i) => <AppCard
+              columnId={this.props.id}
               edit={c.edit}
               text={c.text}
               key={i}
@@ -86,4 +87,4 @@ class Column extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(Column)
+export default Column

@@ -1,6 +1,8 @@
 import React from 'react';
 import Column from './Column';
 import AddColumn from './AddColumn'
+import {DragDropContext} from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 class CardSpace extends React.Component {
   constructor() {
@@ -25,10 +27,10 @@ class CardSpace extends React.Component {
       {this
         .state
         .columns
-        .map(c => <Column name={c}/>)}
+        .map((c,i) => <Column key={i} id={i} name={c}/>)}
       <AddColumn addColumn={this.addColumn.bind(this)}/>
     </span>
   }
 }
 
-export default CardSpace;
+export default DragDropContext(HTML5Backend)(CardSpace);
