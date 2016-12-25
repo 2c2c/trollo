@@ -36,11 +36,10 @@ const cardTarget = {
     const hoverIndex = props.index;
     const hoverColumn = props.columnId;
 
-    //dont replace with themselves
-    if (dragIndex === hoverIndex) {
+    if (dragIndex === hoverIndex && hoverColumn === dragColumn) {
       return;
     }
-
+    // //dont replace with themselves if (dragIndex === hoverIndex) {   return; }
     // determine rectangle on screen
     const hoverBoundingRect = findDOMNode(component).getBoundingClientRect()
 
@@ -53,6 +52,7 @@ const cardTarget = {
     // get pixels to the top
     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
+    // console.log({hoverBoundingRect, hoverMiddleY, clientOffset, hoverClientY})
     // Only perform the move when the mouse has crossed half of the items height
     // When dragging downwards, only move when the cursor is below 50% When dragging
     // upwards, only move when the cursor is above 50% Dragging downwards
@@ -65,7 +65,7 @@ const cardTarget = {
       return;
     }
 
-    props.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)
+      props.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)
 
     // ?
     monitor
@@ -107,7 +107,7 @@ class AppCard extends React.Component {
       connectDragSource,
       connectDropTarget,
       isOver,
-      canDrop
+      canDrop,
     } = this.props;
     const input = <form
       style={{

@@ -3,8 +3,38 @@ import AppCard from './AppCard'
 import AppCardEdit from './AppCardEdit'
 import FlatButton from 'material-ui/FlatButton'
 import {DragDropContext} from 'react-dnd'
+import {DropTarget} from 'react-dnd'
+import ItemTypes from './ItemTypes'
 import HTML5Backend from 'react-dnd-html5-backend'
 import CustomDragLayer from './CustomDragLayer'
+
+const cardTarget = {
+  drop(props, monitor, component) {
+    const dragIndex = monitor
+      .getItem()
+      .index;
+
+    const dragColumn = monitor
+      .getItem()
+      .columnId
+
+    if (props.cards.length !== 0) {
+      return;
+    }
+
+    // empty so index 0 ? fix
+    const hoverColumn = props.id
+    const hoverIndex = 0;
+
+    props.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)
+
+    // ?
+    monitor
+      .getItem()
+      .index = hoverIndex;
+
+  }
+};
 
 class Column extends React.Component {
   constructor(props) {
@@ -12,9 +42,9 @@ class Column extends React.Component {
   }
 
   render() {
-    const {handleAddCard, moveCard, handleSubmit, handleChange} = this.props;
+    const {connectDropTarget, handleAddCard, moveCard, handleSubmit, handleChange} = this.props;
 
-    return (
+    return connectDropTarget(
       <div
         style={{
         backgroundColor: '#DDDDDD',
@@ -51,4 +81,6 @@ class Column extends React.Component {
   }
 }
 
-export default Column
+export default DropTarget(ItemTypes.CARD, cardTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget()
+}))(Column)
