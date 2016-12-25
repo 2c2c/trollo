@@ -2,37 +2,72 @@ import React from 'react';
 import AppCard from './AppCard'
 import AppCardEdit from './AppCardEdit'
 import FlatButton from 'material-ui/FlatButton'
-import {DragDropContext} from 'react-dnd'
-import {DropTarget} from 'react-dnd'
+import {DragSource, DropTarget} from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import HTML5Backend from 'react-dnd-html5-backend'
 import CustomDragLayer from './CustomDragLayer'
+import {findDOMNode} from 'react-dom'
+import {getEmptyImage} from 'react-dnd-html5-backend'
+
+const columnSource = {
+  beginDrag(props) {
+    return {...props};
+  }
+};
 
 const cardTarget = {
   drop(props, monitor, component) {
-    const dragIndex = monitor
-      .getItem()
-      .index;
 
-    const dragColumn = monitor
-      .getItem()
-      .columnId
+    if (monitor.getItemType() === 'card') {
+      const dragIndex = monitor
+        .getItem()
+        .index;
 
-    if (props.cards.length !== 0) {
-      return;
+      const dragColumn = monitor
+        .getItem()
+        .columnId
+
+      if (props.cards.length !== 0) {
+        return;
+      }
+
+      // empty so index 0 ? fix
+      const hoverColumn = props.id
+      const hoverIndex = 0;
+
+      props.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)
+
+      // ?
+      monitor
+        .getItem()
+        .index = hoverIndex;
+
     }
+    if (monitor.getItemType() === 'column') {
+      const dragIndex = monitor
+        .getItem()
+        .id;
 
-    // empty so index 0 ? fix
-    const hoverColumn = props.id
-    const hoverIndex = 0;
+      const hoverIndex = props.id
 
-    props.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)
+      if (dragIndex === hoverIndex) {
+        return;
+      }
 
-    // ?
-    monitor
-      .getItem()
-      .index = hoverIndex;
+      const hoverBoundingRect = findDOMNode(component).getBoundingClientRect()
 
+      const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2
+
+      const clientOffset = monitor.getClientOffset()
+
+      const hoverClientX = clientOffset.x - hoverBoundingRect.right
+
+      props.moveColumn(dragIndex, hoverIndex)
+
+      monitor
+        .getItem()
+        .id = hoverIndex;
+    }
   }
 };
 
@@ -41,10 +76,23 @@ class Column extends React.Component {
     super(props);
   }
 
-  render() {
-    const {connectDropTarget, handleAddCard, moveCard, handleSubmit, handleChange} = this.props;
+  componentDidMount() {
+    this
+      .props
+      .connectDragPreview(getEmptyImage(), {captureDraggingState: true})
+  }
 
-    return connectDropTarget(
+  render() {
+    const {
+      connectDragSource,
+      connectDropTarget,
+      handleAddCard,
+      moveCard,
+      handleSubmit,
+      handleChange
+    } = this.props;
+
+    return connectDragSource(connectDropTarget(
       <div
         style={{
         backgroundColor: '#DDDDDD',
@@ -77,10 +125,19 @@ class Column extends React.Component {
           onClick={e => handleAddCard(e, this.props.id)}>Add new card</FlatButton>
         <CustomDragLayer/>
       </div>
-    )
+    ))
   }
 }
 
-export default DropTarget(ItemTypes.CARD, cardTarget, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget()
-}))(Column)
+export default DropTarget([
+  ItemTypes.CARD, ItemTypes.COLUMN
+], cardTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
+}))(DragSource(ItemTypes.COLUMN, columnSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging()
+}))(Column))

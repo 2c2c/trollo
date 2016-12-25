@@ -7,9 +7,6 @@ import HTML5Backend from 'react-dnd-html5-backend'
 class CardSpace extends React.Component {
   constructor() {
     super();
-    this.moveCard = this
-      .moveCard
-      .bind(this)
     this.state = {
       columns: []
     }
@@ -41,17 +38,33 @@ class CardSpace extends React.Component {
 
   moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn) {
     // if in same column
+    console.log('hello')
     let {columns} = this.state;
     const dragCard = columns[dragColumn].cards[dragIndex];
 
-    columns[dragColumn].cards.splice(dragIndex, 1)
-    columns[hoverColumn].cards.splice(hoverIndex, 0, dragCard)
+    columns[dragColumn]
+      .cards
+      .splice(dragIndex, 1)
+    columns[hoverColumn]
+      .cards
+      .splice(hoverIndex, 0, dragCard)
 
     this.setState({columns: columns})
 
     // different access different columns cards
   }
 
+  moveColumn(dragIndex, hoverIndex) {
+    let {columns} = this.state
+    const dragColumn = columns[dragIndex]
+
+    console.log(columns)
+    columns.splice(dragIndex, 1)
+    columns.splice(hoverIndex, 0, dragColumn)
+    console.log(columns)
+
+    this.setState({columns: columns})
+  }
   handleSubmit(e, cardId, colId) {
     e.preventDefault()
     e.stopPropagation()
@@ -82,7 +95,8 @@ class CardSpace extends React.Component {
           name={c.text}
           cards={c.cards}
           handleAddCard={(e, cid) => this.handleAddCard(e, cid)}
-          moveCard={this.moveCard}
+          moveCard={(dragIndex, hoverIndex, dragColumn, hoverColumn) => this.moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn)}
+          moveColumn={(dragIndex, hoverIndex) => this.moveColumn(dragIndex, hoverIndex)}
           handleSubmit={(e, cardId, colId) => this.handleSubmit(e, cardId, colId)}
           handleChange={(e, cardId, colId) => this.handleChange(e, cardId, colId)}/>)}
       <AddColumn addColumn={this

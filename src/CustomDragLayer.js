@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import ItemTypes from './ItemTypes'
 import CardDragPreview from './CardDragPreview'
+import ColumnDragPreview from './ColumnDragPreview'
+import Column from './Column'
 import {DragLayer} from 'react-dnd'
 
 const layerStyles = {
@@ -33,6 +35,9 @@ class CustomDragLayer extends Component {
             {item.text}
           </CardDragPreview>
         );
+      // issues TODO
+      // case ItemTypes.COLUMN:
+      //   return (<Column {...item}/>);
       default:
         return null;
     }
