@@ -36,8 +36,8 @@ class CustomDragLayer extends Component {
           </CardDragPreview>
         );
       // issues TODO
-      // case ItemTypes.COLUMN:
-      //   return (<Column {...item}/>);
+      case ItemTypes.COLUMN:
+        return (<ColumnDragPreview {...item}/>);
       default:
         return null;
     }

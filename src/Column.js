@@ -84,6 +84,10 @@ class Column extends React.Component {
 
   render() {
     const {
+      type,
+      isDragging,
+      isOver,
+      canDrop,
       connectDragSource,
       connectDropTarget,
       handleAddCard,
@@ -92,12 +96,20 @@ class Column extends React.Component {
       handleChange
     } = this.props;
 
+    let opacity = 1;
+      if (isOver && canDrop && type === 'column') {
+        opacity = .2
+      }
+
+
     return connectDragSource(connectDropTarget(
+
       <div
         style={{
         backgroundColor: '#DDDDDD',
         padding: "20px 10px 0px 10px",
-        margin: "0px 5px 0px 5px"
+        margin: "0px 5px 0px 5px",
+        opacity
       }}>
         <h3 style={{
           textAlign: 'left'
@@ -135,7 +147,8 @@ export default DropTarget([
   connectDropTarget: connect.dropTarget(),
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
-  canDrop: monitor.canDrop()
+  canDrop: monitor.canDrop(),
+  type: monitor.getItemType()
 }))(DragSource(ItemTypes.COLUMN, columnSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   connectDragPreview: connect.dragPreview(),
