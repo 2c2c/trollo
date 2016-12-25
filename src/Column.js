@@ -106,6 +106,7 @@ class Column extends React.Component {
 
       <div
         style={{
+        minWidth: 200,
         backgroundColor: '#DDDDDD',
         padding: "20px 10px 0px 10px",
         margin: "0px 5px 0px 5px",

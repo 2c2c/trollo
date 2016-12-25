@@ -29,12 +29,19 @@ class AddColumn extends React.Component {
         onChange={e => this.setState({text: e.target.value})}/>
     </form>
 
-    const add_column = <FlatButton onClick={e => this.setState({edit: true})}>Add column</FlatButton>
+    const add_column = <FlatButton
+      style={{
+      width: '100%'
+    }}
+      onClick={e => this.setState({edit: true})}>Add column</FlatButton>
 
     let rendered = this.state.edit
       ? input
       : add_column
-    return <div>
+    return <div style={{
+      width: 225,
+      backgroundColor: '#DDDDDD'
+    }}>
       {rendered}
     </div>
   }

@@ -37,8 +37,6 @@ class CardSpace extends React.Component {
   }
 
   moveCard(dragIndex, hoverIndex, dragColumn, hoverColumn) {
-    // if in same column
-    console.log('hello')
     let {columns} = this.state;
     const dragCard = columns[dragColumn].cards[dragIndex];
 
@@ -58,10 +56,8 @@ class CardSpace extends React.Component {
     let {columns} = this.state
     const dragColumn = columns[dragIndex]
 
-    console.log(columns)
     columns.splice(dragIndex, 1)
     columns.splice(hoverIndex, 0, dragColumn)
-    console.log(columns)
 
     this.setState({columns: columns})
   }
